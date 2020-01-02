@@ -8,5 +8,5 @@ sealed class MainStateEvent {
         val userId: String
     ) : MainStateEvent()
 
-    class Non : MainStateEvent()
+    class None : MainStateEvent()
 }
