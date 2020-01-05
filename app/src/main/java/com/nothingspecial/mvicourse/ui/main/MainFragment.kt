@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.nothingspecial.mvicourse.R
+import com.nothingspecial.mvicourse.ui.main.state.MainStateEvent
 
 class MainFragment : Fragment() {
 
@@ -35,11 +36,13 @@ class MainFragment : Fragment() {
         //Observe lifecyclerowner instead of activity
         viewModel.dataState.observe(viewLifecycleOwner, Observer { dataState ->
             println("Debug : datastate ${dataState}")
-            dataState.blogPost?.let {
+            dataState.blogPost?.let { blogPosts ->
                 //set blog posts data
+                viewModel.setBlogListData(blogPosts)
             }
 
-            dataState.user?.let {
+            dataState.user?.let { user ->
+                viewModel.setUser(user)
 
             }
         })
@@ -61,6 +64,18 @@ class MainFragment : Fragment() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.action_get_user -> triggerGetUserEvent()
+            R.id.action_get_blogs -> triggerBlogsEvent()
+        }
         return super.onOptionsItemSelected(item)
+    }
+
+    private fun triggerBlogsEvent() {
+        viewModel.setStateEvent(MainStateEvent.GetBlogPostsEvent())
+    }
+
+    private fun triggerGetUserEvent() {
+        viewModel.setStateEvent(MainStateEvent.GetUserEvent("1"))
     }
 }

@@ -2,7 +2,7 @@ package com.nothingspecial.mvicourse.ui.main.state
 
 sealed class MainStateEvent {
 
-    class GetBlogPost : MainStateEvent()
+    class GetBlogPostsEvent : MainStateEvent()
 
     class GetUserEvent(
         val userId: String
